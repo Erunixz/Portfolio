@@ -7,9 +7,9 @@ export type LogEntry = {
 }
 
 export const shipLog: LogEntry[] = [
-  { scope: "retinex-lab", kind: "research", text: "ablation suite: one prior at a time, size always reported", href: "/experience" },
-    { scope: "orbitour", kind: "ship", text: "multi-agent planning with 3D fly-throughs", href: "/projects/orbitour" },
-  { scope: "thru.io", kind: "milestone", text: "voice AI drive-through built at Mac-a-Thon 2026", href: "/projects/thru-io" },
-  { scope: "clinical-recorder", kind: "milestone", text: "OSA screening recordings across real patient sessions", href: "/experience" },
-  { scope: "site", kind: "site", text: "tabs, terminal and ⌘K palette live", href: "/" },
+  { scope: "mcmaster", kind: "research", text: "ML Research Assistant, building machine learning systems", href: "/experience" },
+  { scope: "orbitour", kind: "ship", text: "multi-agent trip planning with 3D fly-throughs", href: "/projects/orbitour" },
+  { scope: "thru.io", kind: "milestone", text: "multilingual voice AI drive-through, GDG Mac-a-Thon 2026", href: "/projects/thru-io" },
+  { scope: "kite-uhn", kind: "milestone", text: "recording system used across real patient sessions", href: "/experience" },
+  { scope: "gdg", kind: "oss", text: "open source team member, Google Developer Groups", href: "/experience" },
 ]

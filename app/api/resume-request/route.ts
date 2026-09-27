@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   if (rateLimited(`resume:${clientIp(req)}`)) return NextResponse.json({ error: "Too many requests. Try again later." }, { status: 429 })
 
   const mailer = getMailer()
-  if (!mailer) return NextResponse.json({ error: `Résumé requests aren't set up yet. Email me at ${site.email}.` }, { status: 503 })
+  if (!mailer) return NextResponse.json({ error: `Résumé requests can't be sent right now. Email me at ${site.email}.` }, { status: 503 })
 
   const pdf = await readFile(path.join(process.cwd(), "private", "resume.pdf")).catch(() => null)
 

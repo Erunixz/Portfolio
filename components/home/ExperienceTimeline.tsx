@@ -19,7 +19,7 @@ export default function ExperienceTimeline() {
       const list = listRef.current
       if (!list) return
       const items = [...list.querySelectorAll<HTMLElement>("[data-exp]")]
-      const line = window.innerHeight * 0.55
+      const line = window.innerHeight * 0.45
       const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4
       let idx = 0
       items.forEach((el, i) => el.getBoundingClientRect().top < line && (idx = i))

@@ -16,7 +16,7 @@ export async function POST(req: Request) {
   if (rateLimited(`contact:${clientIp(req)}`, 5)) return NextResponse.json({ error: "Too many messages. Try again later." }, { status: 429 })
 
   const mailer = getMailer()
-  if (!mailer) return NextResponse.json({ error: `The form isn't set up yet. Email me at ${site.email}.` }, { status: 503 })
+  if (!mailer) return NextResponse.json({ error: `Messages can't be sent from here right now. Email me at ${site.email}.` }, { status: 503 })
 
   try {
     await mailer.transport.sendMail({
