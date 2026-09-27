@@ -9,7 +9,7 @@ export const site = {
 
   roles: ["ML Research Assistant", "Software Engineer"],
 
-  url: "https://erfanzamani.dev",
+  url: "https://www.erfanzamani.com",
 
   email: "zamane1@mcmaster.ca",
   github: "https://github.com/Erunixz",

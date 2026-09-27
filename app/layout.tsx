@@ -5,7 +5,6 @@ import { site } from "@/content/site"
 import Providers from "@/components/Providers"
 import SiteHeader from "@/components/SiteHeader"
 import SiteFooter from "@/components/SiteFooter"
-import ShipLogDock from "@/components/ShipLogDock"
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800", "900"], variable: "--font-poppins" })
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" })
@@ -55,7 +54,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             {children}
           </main>
           <SiteFooter />
-          <ShipLogDock />
         </Providers>
       </body>
     </html>
