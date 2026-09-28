@@ -76,8 +76,8 @@ export const experience: Experience[] = [
     phase: "Fun fact",
     title: "Tutor & Community Advisor",
     org: "Outside of code",
-    summary: "When I'm not coding, I tutor math and computer science and advise in my community.",
-    points: ["Helping students build intuition rather than memorize steps."],
-    tags: ["Teaching", "Math", "Mentoring"],
+    summary: "When I'm not coding, I tutor math and computer science and work as a Community Advisor in residence, supporting the students living on my floor.",
+    points: ["Helping students build intuition rather than memorize steps.", "Building community in residence and being a go-to person for students settling into university life."],
+    tags: ["Teaching", "Math", "Mentoring", "Residence life"],
   },
 ]
