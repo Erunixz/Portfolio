@@ -62,9 +62,10 @@ export default function Home() {
                 ceiling of what I could achieve.
               </p>
               <p>
-                Before beginning university, I worked at the <B>KITE Research Institute at University Health Network</B>, where I built an{" "}
-                <B>audio and video recording system used in real patient sessions</B>, and contributed to an <B>AI platform for sleep apnea screening</B> alongside{" "}
-                <B>senior researchers and University of Toronto faculty</B>. Seeing something I helped build move beyond my laptop and become part of real research changed the way I
+                Before beginning university, I worked at the <B>KITE Research Institute at University Health Network</B> as a software engineer on an{" "}
+                <B>AI platform that screens for obstructive sleep apnea from a patient&apos;s voice</B>. I built its <B>voice cleaning pipeline</B>, a{" "}
+                <B>feature extraction engine computing 25,000+ features across 8 extractors</B>, and the full-stack application that puts the models into clinical use, working
+                alongside <B>senior researchers and University of Toronto professors</B>. Seeing something I helped build move beyond my laptop and become part of real research changed the way I
                 thought about technology.
               </p>
               <p>
