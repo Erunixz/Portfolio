@@ -16,7 +16,7 @@ export default function OpengraphImage() {
           <div style={{ display: "flex" }}>
             Erfan Zamani<span style={{ color: "#7a003c" }}>.</span>
           </div>
-          <div style={{ display: "flex", fontSize: 52, letterSpacing: -1, color: "#6b7280", marginTop: 20 }}>ML research · clinical software · full-stack</div>
+          <div style={{ display: "flex", fontSize: 52, letterSpacing: -1, color: "#6b7280", marginTop: 20 }}>ML research · software engineering · full-stack</div>
         </div>
         <div style={{ display: "flex", fontSize: 24, color: "#3a3733" }}>ML Research @ McMaster · Software Engineer @ KITE (UHN) · GDG Open Source</div>
       </div>

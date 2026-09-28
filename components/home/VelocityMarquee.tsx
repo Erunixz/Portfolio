@@ -42,7 +42,7 @@ function Row({ text, baseVelocity }: { text: string; baseVelocity: number }) {
 export default function VelocityMarquee() {
   return (
     <section aria-hidden className="space-y-1 border-y border-mute/10 py-5 text-ink/90 select-none md:py-6">
-      <Row text="Machine learning ✦ Computer vision ✦ Clinical software ✦" baseVelocity={-2} />
+      <Row text="Machine learning ✦ Computer vision ✦ Software engineering ✦" baseVelocity={-2} />
       <Row text="Research ✦ Full-stack ✦ Open source ✦ Software engineering ✦" baseVelocity={2} />
     </section>
   )

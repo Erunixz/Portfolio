@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: site.description,
   authors: [{ name: site.name, url: site.url }],
   creator: site.name,
-  keywords: ["Erfan Zamani", "machine learning", "computer vision", "sleep apnea", "clinical software", "software engineer", "McMaster", "KITE", "UHN"],
+  keywords: ["Erfan Zamani", "machine learning", "computer vision", "sleep apnea", "software engineering", "software engineer", "McMaster", "KITE", "UHN"],
   openGraph: {
     type: "website",
     url: "/",
