@@ -45,6 +45,12 @@ export default function ContactForm() {
         {typeof state === "object" ? state.error : state === "sent" ? "Thanks! Your message is on its way. I'll reply by email." : ""}
       </p>
 
+      {typeof state === "object" && (
+        <a href={`mailto:${site.email}`} className="btn w-full border border-line">
+          Email me instead
+        </a>
+      )}
+
       <button type="submit" disabled={state === "sending"} className="btn btn-ink w-full disabled:opacity-60">
         {state === "sending" ? "Sending…" : "Send message"}
       </button>

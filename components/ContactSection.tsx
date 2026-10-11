@@ -16,7 +16,7 @@ export default function ContactSection({ as: Tag = "h1", titleId }: { as?: "h1" 
         <Tag id={titleId} className="text-3xl font-black tracking-tighter md:text-4xl">
           Let&apos;s build something real.
         </Tag>
-        <p className="mt-4 max-w-md text-mute">{site.availability}. Research collaborations and interesting ideas are welcome too.</p>
+        <p className="mt-4 max-w-md text-mute">Have a question, want to learn more about my work, or interested in working together? I&apos;d love to hear from you.</p>
         <ul className="mt-8 space-y-3 text-sm font-medium">
           {links.map((l) => (
             <li key={l.href}>

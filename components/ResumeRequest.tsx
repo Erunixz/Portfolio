@@ -138,6 +138,11 @@ function Dialog({ onClose }: { onClose: () => void }) {
               <div aria-live="polite" className={cx("text-sm", state.kind === "error" ? "text-maroon" : "sr-only")}>
                 {state.kind === "error" ? state.message : state.kind === "sending" ? "Sending…" : ""}
               </div>
+              {state.kind === "error" && (
+                <a href={`mailto:${site.email}?subject=${encodeURIComponent("Résumé request")}`} className="btn w-full border border-line">
+                  Email me instead
+                </a>
+              )}
 
               <button type="submit" disabled={state.kind === "sending"} className="btn btn-ink w-full disabled:opacity-60">
                 {state.kind === "sending" ? "Sending…" : "Email me the résumé"}

@@ -1,8 +1,6 @@
-import { readFile } from "node:fs/promises"
-import path from "node:path"
 import { NextResponse } from "next/server"
 import { site } from "@/content/site"
-import { clean, clientIp, getMailer, isEmail, rateLimited } from "@/lib/mail"
+import { clean, clientIp, getMailer, getResume, isEmail, rateLimited } from "@/lib/mail"
 
 export const runtime = "nodejs"
 
@@ -21,7 +19,7 @@ export async function POST(req: Request) {
   const mailer = getMailer()
   if (!mailer) return NextResponse.json({ error: `Résumé requests can't be sent right now. Email me at ${site.email}.` }, { status: 503 })
 
-  const pdf = await readFile(path.join(process.cwd(), "private", "resume.pdf")).catch(() => null)
+  const pdf = await getResume()
 
   const reply = [
     `Hi ${name.split(" ")[0]},`,
@@ -51,7 +49,7 @@ export async function POST(req: Request) {
         to: mailer.owner,
         replyTo: email,
         subject: `Résumé request from ${name}${company ? ` (${company})` : ""}`,
-        text: [`Name: ${name}`, `Email: ${email}`, `Company: ${company || "not given"}`, "", note || "(no note)", "", pdf ? "Résumé was sent automatically." : "No private/resume.pdf found; send it manually."].join("\n"),
+        text: [`Name: ${name}`, `Email: ${email}`, `Company: ${company || "not given"}`, "", note || "(no note)", "", pdf ? "Résumé was sent automatically." : "No résumé found (private/resume.pdf or RESUME_URL); send it manually."].join("\n"),
       }),
     ])
   } catch (err) {
