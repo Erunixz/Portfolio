@@ -20,12 +20,12 @@ export default function ExperienceTimeline() {
       if (!list) return
       const items = [...list.querySelectorAll<HTMLElement>("[data-exp]")]
       const line = window.innerHeight * 0.45
-      const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4
+      const r = list.getBoundingClientRect()
+      const atBottom = r.bottom <= window.innerHeight && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4
       let idx = 0
       items.forEach((el, i) => el.getBoundingClientRect().top < line && (idx = i))
       if (atBottom) idx = items.length - 1
       setActive(idx)
-      const r = list.getBoundingClientRect()
       progress.set(atBottom ? 1 : Math.min(1, Math.max(0, (line - r.top) / r.height)))
     }
     const onScroll = () => {

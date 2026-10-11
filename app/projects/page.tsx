@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <div className="shell pt-6 md:pt-10">
-      <SectionHead as="h1" kicker="Portfolio" title="Selected works." />
+      <SectionHead as="h1" title="Projects" />
       <ProjectsGrid />
     </div>
   )

@@ -1,19 +1,15 @@
 import Link from "next/link"
-import { awardsSummary } from "@/content/awards"
 import { site } from "@/content/site"
 import Hero from "@/components/home/Hero"
 import VelocityMarquee from "@/components/home/VelocityMarquee"
 import Terminal from "@/components/home/Terminal"
 import TechStack from "@/components/home/TechStack"
+import ExperienceTimeline from "@/components/home/ExperienceTimeline"
+import ProjectsGrid from "@/components/ProjectsGrid"
+import AwardsList from "@/components/AwardsList"
+import ContactSection from "@/components/ContactSection"
 import SectionHead from "@/components/SectionHead"
 import { ArrowRight } from "@/components/Icons"
-
-const highlights = [
-  { k: "Now", v: "ML Research Assistant at McMaster, building machine learning systems and software", href: "/experience" },
-  { k: "Before", v: "Software Engineer at KITE Research Institute (UHN) on a voice-based obstructive sleep apnea screening platform", href: "/experience" },
-  { k: "Open source", v: "Team member with Google Developer Groups, contributing to shared open-source projects", href: "/experience" },
-  { k: "Recognized", v: awardsSummary, href: "/awards" },
-]
 
 export default function Home() {
   return (
@@ -37,61 +33,58 @@ export default function Home() {
       </section>
 
       <section id="about" className="border-t border-mute/10 py-20 md:py-24">
-        <div className="shell grid gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-7">
-            <SectionHead kicker="About me" title="More than anything, I want my work to matter." className="mb-6 md:mb-8" />
+        <div className="shell">
+          <div className="max-w-3xl">
+            <SectionHead title="About me" className="mb-6 md:mb-8" />
             <div className="reveal-left space-y-4 leading-relaxed text-mute">
-              <p className="text-lg text-ink">
-                Two years after immigrating to Canada, I found myself contributing to <B>AI and software systems</B> at{" "}
-                <B>one of the world&apos;s leading rehabilitation research institutes</B>, building tools used across <B>real patient sessions</B>, competing among{" "}
-                <B>Canada&apos;s strongest mathematics and computing students</B>, and earning opportunities I once considered impossible.
+              <p>
+                When my family moved to Canada, we started over. My parents rebuilt their careers from nothing, and I walked into classrooms where everyone else already knew the
+                system they&apos;d grown up in. I was behind, and I couldn&apos;t afford to stay there.
               </p>
               <p>
-                When my family immigrated to Canada, we had to <B>rebuild our lives in a new country</B> while my parents restarted their careers. I entered an unfamiliar education
-                system alongside students who had spent their entire lives growing within it. That created a gap, and I became <B>determined to close it as quickly as I could</B>.
+                Barely two years later, I was qualifying for the <B>Canadian Mathematical Olympiad Repêchage</B>, earning distinction in the{" "}
+                <B>Canadian Computing Competition</B>, and building clinical AI at the <B>KITE Research Institute (UHN)</B> beside senior researchers and University of Toronto
+                professors, before I&apos;d even started university.
               </p>
               <p>
-                In a remarkably short period, I <B>qualified among top national mathematics and computing competitors</B>, received <B>more than $120,000 in scholarship offers</B>{" "}
-                from the University of Toronto, and earned the <B>$25,000 University of Waterloo Faculty of Mathematics Global Scholarship</B>, awarded to{" "}
-                <B>only ten students worldwide</B>. I ultimately turned down both to pursue Computer Science at McMaster University, where I now hold a <B>{site.gpa} GPA</B> and have
-                earned <B>$239,000 CAD in merit-based entrance, research and excellence awards</B>.
+                That work was recognized with <B>$120K+ in scholarship offers from U of T</B> and Waterloo&apos;s <B>Global Scholarship</B>, given to just ten students in the
+                world. Today I study Computer Science at McMaster, where I&apos;ve earned <B>$239K in scholarships</B> and work as an <B>ML Research Assistant</B>.
               </p>
               <p>
-                What matters most to me, however, is not the numbers. Those achievements proved something to me: even with uncertainty, financial pressure, unfamiliarity and the
-                challenge of starting over, <B>opportunities that once felt out of reach were still possible</B>. Each milestone became proof that obstacles did not have to define the
-                ceiling of what I could achieve.
-              </p>
-              <p>
-                Before beginning university, I worked at the <B>KITE Research Institute at University Health Network</B> as a software engineer on an{" "}
-                <B>AI platform that screens for obstructive sleep apnea from a patient&apos;s voice</B>. I built its <B>voice cleaning pipeline</B>, a{" "}
-                <B>feature extraction engine computing 25,000+ features across 8 extractors</B>, and the full-stack application that puts the models into clinical use, working
-                alongside <B>senior researchers and University of Toronto professors</B>. Seeing something I helped build move beyond my laptop and become part of real research changed the way I
-                thought about technology.
-              </p>
-              <p>
-                I realized that what excites me most is not simply building advanced models. It is creating something that <B>makes a tangible difference in people&apos;s lives</B>. I
-                want to work on AI that is <B>useful, trusted and meaningful</B>, where research becomes something real and where the impact can actually be felt.
-              </p>
-              <p>
-                Today, I continue that pursuit as a <B>Machine Learning Research Assistant at McMaster</B>. I keep seeking environments where{" "}
-                <B>the problems are difficult, the standards are high</B>, and the people around me force me to become better. I want to work alongside exceptional people, contribute
-                to ambitious AI, and build technology whose impact extends beyond the model itself to <B>the people who ultimately depend on it</B>.
+                I don&apos;t take any of it for granted. Starting from behind taught me to learn fast, work relentlessly and stay hungry, and that&apos;s what I bring to every
+                team I join. I want to build AI that genuinely matters, alongside people who push me to be better.
               </p>
             </div>
           </div>
-          <ul className="grid content-start gap-3 sm:grid-cols-2 lg:col-span-5 lg:grid-cols-1 lg:pt-28">
-            {highlights.map((h, i) => (
-              <li key={h.k} className="reveal" style={{ transitionDelay: `${i * 80}ms` }}>
-                <Link href={h.href} className="card card-hover group flex h-full items-start gap-4 p-5">
-                  <span className="flex-1">
-                    <span className="block text-[11px] font-bold tracking-widest text-maroon uppercase">{h.k}</span>
-                    <span className="mt-1.5 block text-sm leading-relaxed font-medium">{h.v}</span>
-                  </span>
-                  <ArrowRight className="mt-1 size-4 shrink-0 text-mute transition-transform group-hover:translate-x-1 group-hover:text-ink" />
-                </Link>
-              </li>
-            ))}
-          </ul>
+        </div>
+      </section>
+
+      <section id="experience" aria-labelledby="experience-title" className="scroll-mt-24 border-t border-mute/10 py-20 md:py-24">
+        <div className="shell">
+          <SectionHead kicker="Experience" title={<span id="experience-title">Where I&apos;ve worked and learned.</span>} aside={<SeeAll href="/experience" />} />
+          <ExperienceTimeline />
+        </div>
+      </section>
+
+      <section id="projects" aria-labelledby="projects-title" className="scroll-mt-24 border-t border-mute/10 py-20 md:py-24">
+        <div className="shell">
+          <SectionHead title={<span id="projects-title">Projects</span>} aside={<SeeAll href="/projects" />} />
+          <ProjectsGrid />
+        </div>
+      </section>
+
+      <section id="awards" aria-labelledby="awards-title" className="scroll-mt-24 border-t border-mute/10 py-20 md:py-24">
+        <div className="shell">
+          <SectionHead
+            kicker="Awards & honours"
+            title={<span id="awards-title">Recognition along the way.</span>}
+            aside={
+              <p className="rounded-full border border-line bg-card px-4 py-2 text-sm font-semibold">
+                {site.program}, {site.school} · <span className="text-maroon">GPA {site.gpa}</span>
+              </p>
+            }
+          />
+          <AwardsList nav={false} headingLevel="h3" />
         </div>
       </section>
 
@@ -101,7 +94,21 @@ export default function Home() {
           <TechStack />
         </div>
       </section>
+
+      <section id="contact" aria-labelledby="contact-title" className="scroll-mt-24 border-t border-mute/10 py-20 md:py-24">
+        <div className="shell">
+          <ContactSection as="h2" titleId="contact-title" />
+        </div>
+      </section>
     </>
+  )
+}
+
+function SeeAll({ href }: { href: string }) {
+  return (
+    <Link href={href} className="group inline-flex items-center gap-1.5 text-sm font-bold text-mute hover:text-ink">
+      Open tab <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+    </Link>
   )
 }
 
