@@ -21,17 +21,20 @@ export async function POST(req: Request) {
 
   const pdf = await getResume()
 
+  const domain = site.url.replace(/^https?:\/\/(www\.)?/, "")
   const reply = [
     `Hi ${name.split(" ")[0]},`,
     "",
-    pdf ? "Thanks for your interest. My résumé is attached." : "Thanks for your interest! I'll send my résumé over personally shortly.",
+    pdf
+      ? `Thanks for your interest. My résumé is attached, and my projects are at ${domain}/projects.`
+      : `Thanks for your interest. I'll send my résumé over personally shortly. In the meantime, my projects are at ${domain}/projects.`,
     "",
-    `Projects: ${site.url}/projects`,
-    `GitHub: ${site.github}`,
+    "I'd love to hear what your team is working on and talk about where I could make an impact. Just reply here and I'll get back to you personally.",
     "",
-    "If you'd like to talk, just reply to this email.",
-    "",
+    "Best,",
     "Erfan Zamani",
+    "ML Research Assistant · McMaster University",
+    `${domain} · linkedin.com/in/erfan-zamani1`,
   ].join("\n")
 
   try {
@@ -40,7 +43,7 @@ export async function POST(req: Request) {
         from: mailer.from,
         to: email,
         replyTo: mailer.owner,
-        subject: "Erfan Zamani's résumé",
+        subject: "Résumé – Erfan Zamani",
         text: reply,
         attachments: pdf ? [{ filename: "Erfan-Zamani-Resume.pdf", content: pdf, contentType: "application/pdf" }] : [],
       }),
@@ -48,7 +51,7 @@ export async function POST(req: Request) {
         from: mailer.from,
         to: mailer.owner,
         replyTo: email,
-        subject: `Résumé request from ${name}${company ? ` (${company})` : ""}`,
+        subject: `Résumé request: ${name}${company ? ` (${company})` : ""}`,
         text: [`Name: ${name}`, `Email: ${email}`, `Company: ${company || "not given"}`, "", note || "(no note)", "", pdf ? "Résumé was sent automatically." : "No résumé found (private/resume.pdf or RESUME_URL); send it manually."].join("\n"),
       }),
     ])

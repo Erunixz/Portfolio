@@ -45,12 +45,7 @@ export default function Hero() {
   return (
     <section id="home" className="shell grid items-center gap-12 pt-6 pb-16 md:grid-cols-2 md:pt-10 md:pb-20 lg:gap-16">
       <div className="reveal-left">
-        <p className="inline-flex items-center gap-2 rounded-full border border-mute/20 bg-card px-3 py-1.5 text-xs font-medium text-ink-2">
-          <span className="pulse-dot size-2 rounded-full bg-maroon" aria-hidden />
-          {site.availability}
-        </p>
-
-        <h1 className="mt-6">
+        <h1>
           <span className="block font-hand text-2xl text-maroon md:text-3xl">Hi, I&apos;m</span>
           <span className="relative mt-1 inline-block text-4xl leading-[1.05] font-extrabold tracking-[-0.035em] md:text-5xl">
             {site.name}

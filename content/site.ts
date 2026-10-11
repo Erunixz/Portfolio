@@ -19,7 +19,6 @@ export const site = {
   program: "B.Sc. Computer Science",
   gpa: "4.0/4.0",
   location: "Toronto, ON",
-  availability: "Contact me for ML & software engineering co-op roles",
 
   portrait: "/images/erfan.webp" as string | null,
   avatar: "/images/erfan.webp",

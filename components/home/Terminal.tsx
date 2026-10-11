@@ -55,7 +55,7 @@ const commands: Record<string, Command> = {
         <p>{site.program} · {site.school} · GPA {site.gpa}</p>
         <p>ML Research Assistant @ McMaster · ex-Software Engineer @ KITE (UHN), sleep apnea screening · GDG open source</p>
         <p>
-          <Dim>{site.location} · {site.availability}</Dim>
+          <Dim>{site.location}</Dim>
         </p>
       </div>
     ),
