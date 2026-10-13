@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import { Caveat, Geist_Mono, Poppins } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { site } from "@/content/site"
 import Providers from "@/components/Providers"
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </main>
           <SiteFooter />
         </Providers>
+        <Analytics />
       </body>
     </html>
   )
