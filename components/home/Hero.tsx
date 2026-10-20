@@ -8,7 +8,7 @@ import { ArrowRight } from "../Icons"
 
 const badges = [
   { text: "ML research @ McMaster", icon: "M4 7h16M4 12h10M4 17h7" },
-  { text: "OSA screening software @ KITE", icon: "M3 12h4l2-5 4 10 2-5h6" },
+  { text: "OSA screening software @ UHN", icon: "M3 12h4l2-5 4 10 2-5h6" },
   { text: "Open source @ GDG", icon: "m8 8-4 4 4 4m8 0 4-4-4-4m-2-3-4 14" },
 ]
 
