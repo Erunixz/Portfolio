@@ -289,16 +289,16 @@ export default function Terminal() {
         setCursor(next)
         setValue(history[next])
       }
-    } else if (e.key === "Tab" && value) {
+    } else if (e.key === "Tab" && !e.shiftKey && value) {
+      // Keep focus in the terminal while typing; an empty prompt lets Tab move on so keyboard users aren't trapped
+      e.preventDefault()
       const [first, ...rest] = value.split(" ")
       const pool = rest.length ? projects.map((p) => p.slug) : names.filter((n) => !commands[n].hidden)
       const partial = rest.length ? rest.join(" ") : first
       const matches = pool.filter((n) => n.startsWith(partial.toLowerCase()))
       if (matches.length === 1) {
-        e.preventDefault()
         setValue(rest.length ? `${first} ${matches[0]}` : `${matches[0]} `)
       } else if (matches.length > 1) {
-        e.preventDefault()
         setEntries((en) => [...en, { id: idRef.current++, input: value, output: <Dim>{matches.join("   ")}</Dim> }])
       }
     } else if (e.key === "l" && e.ctrlKey) {
