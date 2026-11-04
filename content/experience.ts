@@ -59,7 +59,7 @@ export const experience: Experience[] = [
     id: "kite-student",
     kind: "Work",
     phase: "Before",
-    title: "Research Student",
+    title: "Software Developer",
     org: "KITE Research Institute · University Health Network",
     location: "Toronto, ON",
     summary: "Developed a graphical user interface and a responsive web application for clinical research.",
