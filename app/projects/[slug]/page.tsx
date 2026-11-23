@@ -43,9 +43,16 @@ export default async function ProjectPage({ params }: Props) {
         </nav>
         <div className="mt-8 grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <span className="inline-flex items-center gap-2 rounded-full border border-mute/20 bg-card px-3 py-1.5 text-xs font-bold tracking-widest uppercase">
-              <KindDot category={p.category} /> {categoryLabel[p.category]}
-            </span>
+            <div className="flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-2 rounded-full border border-mute/20 bg-card px-3 py-1.5 text-xs font-bold tracking-widest uppercase">
+                <KindDot category={p.category} /> {categoryLabel[p.category]}
+              </span>
+              {p.status && (
+                <span className="inline-flex items-center gap-2 rounded-full border border-maroon/30 bg-maroon-soft px-3 py-1.5 text-xs font-bold tracking-widest text-maroon uppercase">
+                  <span aria-hidden className="size-2 animate-pulse rounded-full bg-maroon" /> {p.status}
+                </span>
+              )}
+            </div>
             <h1 className="rise mt-4 text-4xl leading-[0.95] font-black tracking-tighter md:text-5xl lg:text-6xl">{p.title}</h1>
             <p className="rise mt-5 max-w-2xl text-lg leading-relaxed font-medium text-mute" style={{ animationDelay: "100ms" }}>
               {p.oneLiner}

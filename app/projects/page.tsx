@@ -4,7 +4,7 @@ import ProjectsGrid from "@/components/ProjectsGrid"
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Projects by Erfan Zamani: Orbitour and thru.io.",
+  description: "Projects by Erfan Zamani: Orbitour, thru.io, AgentGuard and SweepMate.",
   alternates: { canonical: "/projects" },
 }
 

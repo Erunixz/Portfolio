@@ -1,5 +1,5 @@
 "use client"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import type { ProjectImage } from "@/content/projects"
 import { cx } from "@/lib/utils"
@@ -28,18 +28,22 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
 
   return (
     <figure className="m-0">
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="group relative block w-full overflow-hidden rounded-2xl border border-line bg-night shadow-[0_30px_60px_-30px_rgb(0_0_0/0.45)]"
-        aria-label={`Open screenshot full screen: ${current.alt}`}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={current.src} alt={current.alt} width={current.width} height={current.height} className="block h-auto w-full transition-transform duration-700 group-hover:scale-[1.015]" />
-        <span className="absolute right-3 bottom-3 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
-          View full screen
-        </span>
-      </button>
+      {current.video ? (
+        <VideoStage key={current.video} image={current} />
+      ) : (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="group relative block w-full overflow-hidden rounded-2xl border border-line bg-night shadow-[0_30px_60px_-30px_rgb(0_0_0/0.45)]"
+          aria-label={`Open screenshot full screen: ${current.alt}`}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={current.src} alt={current.alt} width={current.width} height={current.height} className="block h-auto w-full transition-transform duration-700 group-hover:scale-[1.015]" />
+          <span className="absolute right-3 bottom-3 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
+            View full screen
+          </span>
+        </button>
+      )}
       <figcaption className="mt-3 text-sm text-mute">{current.caption}</figcaption>
 
       {images.length > 1 && (
@@ -49,12 +53,21 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
               <button
                 type="button"
                 onClick={() => setIndex(i)}
-                aria-label={`Show screenshot: ${img.caption}`}
+                aria-label={`${img.video ? "Show video" : "Show screenshot"}: ${img.caption}`}
                 aria-pressed={i === index}
-                className={cx("block w-full overflow-hidden rounded-lg border-2 transition-all", i === index ? "border-ink" : "border-transparent opacity-60 hover:opacity-100")}
+                className={cx("relative block w-full overflow-hidden rounded-lg border-2 transition-all", i === index ? "border-ink" : "border-transparent opacity-60 hover:opacity-100")}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={img.src} alt="" width={img.width} height={img.height} loading="lazy" className="block aspect-video w-full object-cover" />
+                {img.video && (
+                  <span aria-hidden className="absolute inset-0 grid place-items-center">
+                    <span className="grid size-8 place-items-center rounded-full bg-black/65 text-white">
+                      <svg viewBox="0 0 24 24" className="ml-0.5 size-3.5" fill="currentColor">
+                        <path d="M7 4.5v15l13-7.5z" />
+                      </svg>
+                    </span>
+                  </span>
+                )}
               </button>
             </li>
           ))}
@@ -70,8 +83,12 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
             className="page-enter fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/90 p-4"
             onClick={(e) => e.target === e.currentTarget && setOpen(false)}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={current.src} alt={current.alt} className="max-h-[78vh] max-w-full rounded-xl object-contain" />
+            {current.video ? (
+              <video key={current.video} src={current.video} poster={current.src} controls playsInline aria-label={current.alt} className="max-h-[78vh] max-w-full rounded-xl" />
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={current.src} alt={current.alt} className="max-h-[78vh] max-w-full rounded-xl object-contain" />
+            )}
             <p className="mt-4 text-center text-sm text-white/75">{current.caption}</p>
             <div className="mt-4 flex gap-3">
               {images.length > 1 && (
@@ -92,5 +109,47 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
           document.body,
         )}
     </figure>
+  )
+}
+
+function VideoStage({ image }: { image: ProjectImage }) {
+  const ref = useRef<HTMLVideoElement>(null)
+  const [started, setStarted] = useState(false)
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-line bg-night shadow-[0_30px_60px_-30px_rgb(0_0_0/0.45)]">
+      <video
+        ref={ref}
+        src={image.video}
+        poster={image.src}
+        controls={started}
+        playsInline
+        preload="none"
+        aria-label={image.alt}
+        onPlay={() => setStarted(true)}
+        className="block w-full bg-night object-contain"
+        style={{ aspectRatio: `${image.width} / ${image.height}` }}
+      />
+      {!started && (
+        <button
+          type="button"
+          onClick={() => {
+            setStarted(true)
+            ref.current?.play()
+          }}
+          className="group absolute inset-0 grid place-items-center"
+          aria-label={`Play video: ${image.caption}`}
+        >
+          <span className="flex items-center gap-3 rounded-full bg-black/75 py-3 pr-6 pl-4 text-sm font-semibold text-white shadow-2xl backdrop-blur-sm transition-transform duration-300 group-hover:scale-105">
+            <span className="grid size-10 place-items-center rounded-full bg-white text-black">
+              <svg viewBox="0 0 24 24" className="ml-0.5 size-4" fill="currentColor" aria-hidden>
+                <path d="M7 4.5v15l13-7.5z" />
+              </svg>
+            </span>
+            Watch the demo
+          </span>
+        </button>
+      )}
+    </div>
   )
 }

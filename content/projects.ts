@@ -16,7 +16,8 @@ export type Diagram = {
   edges: { from: string; to: string; label?: string }[]
 }
 
-export type ProjectImage = { src: string; alt: string; caption: string; width: number; height: number }
+/** `src` is the still image; when `video` is set, `src` doubles as the video's poster. */
+export type ProjectImage = { src: string; alt: string; caption: string; width: number; height: number; video?: string }
 
 export type Category = "product" | "research" | "oss"
 
@@ -31,6 +32,7 @@ export type Project = {
   title: string
   kind: string
   category: Category
+  status?: "In progress"
   oneLiner: string
   role: string
   stack: string[]
@@ -190,6 +192,158 @@ export const projects: Project[] = [
         { from: "voice", to: "server", label: "order" },
         { from: "server", to: "kiosk", label: "Socket.IO" },
         { from: "server", to: "kitchen" },
+      ],
+    },
+  },
+  {
+    slug: "agentguard",
+    title: "AgentGuard",
+    kind: "Open source · AI agent security",
+    category: "oss",
+    status: "In progress",
+    oneLiner: "An open-source security gateway that checks every tool call an AI agent makes, then allows it, blocks it or holds it for a human to approve.",
+    role: "AI/ML & Security · GDG McMaster",
+    stack: ["Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "Docker", "pytest"],
+    highlight: "I built the gateway's prompt-injection detector, with Unicode-normalized matching and evidence traced back to the original text.",
+    links: [{ label: "GitHub", href: "https://github.com/DSC-McMaster-U/agent-guard" }],
+
+    images: [
+      {
+        src: "/projects/agentguard/architecture.webp",
+        width: 1800,
+        height: 915,
+        caption: "Target architecture on Google Cloud: gateway, policy and decision engines, security workers and human approval",
+        alt: "AgentGuard architecture: an AI agent's tool calls pass through a gateway, policy engine, risk orchestrator and decision engine on GKE, with security workers, a human approval service, PostgreSQL audit logs and observability",
+      },
+    ],
+    problem:
+      "AI agents now send emails, query databases and call APIs on their own. A single instruction hidden in an email or web page can turn a helpful agent against its user, and most agent setups run tool calls with no checkpoint in between.",
+    built:
+      "AgentGuard sits between an agent and its tools. Each proposed tool call is checked against authorization policies, validated, and scanned for prompt injection and sensitive data, then allowed, blocked or held for human approval, with every decision audited. I'm on the AI/ML & Security team, where I own the prompt-injection detector.",
+    how: [
+      "A FastAPI gateway receives each proposed tool call and runs it through a deterministic policy engine: allow, block or approval required.",
+      "My detector flags untrusted text only when it contains both a fake role marker (like \"SYSTEM:\") and an explicit override phrase, which keeps false alarms low.",
+      "Input is normalized character by character with Unicode NFKC, casefolding and whitespace collapsing, so full-width and mixed-case tricks still match, and evidence is cut from the original text.",
+      "Findings are structured (category, severity, confidence, rule IDs, bounded evidence) so the decision engine can weigh them alongside policy.",
+      "A React dashboard shows agent activity and lets a reviewer approve or deny actions that were held.",
+      "An open benchmark of adversarial and benign scenarios runs alongside 150+ backend tests in GitHub Actions.",
+    ],
+    decisions: [
+      {
+        title: "Detectors inform, policy decides",
+        body: "The detector never blocks or grants anything on its own. It returns findings to the decision engine, so a heuristic can never override a policy block.",
+      },
+      {
+        title: "Narrow on purpose",
+        body: "The rules stay strict to avoid false positives, and known misses (paraphrases, encoded text, other languages) are written up as regression cases instead of being hidden.",
+      },
+      {
+        title: "Simulated tools first",
+        body: "The demo tool is a simulated email send with a local outbox, so the full allow, block and approve flow can be shown without real credentials.",
+      },
+    ],
+    outcome: [
+      "Prompt-injection detector merged into the backend and passing all regression scenarios.",
+      "Policy engine, request validation and approval dashboard working, backed by 150+ backend tests in CI.",
+    ],
+    diagram: {
+      height: 470,
+      caption: "Decision path: every tool call is checked before it runs, and held actions wait for a human.",
+      nodes: [
+        { id: "agent", label: "AI agent", sub: "proposed tool call", x: 120, y: 80, tone: "muted" },
+        { id: "gateway", label: "Gateway", sub: "FastAPI · validation", x: 370, y: 80 },
+        { id: "policy", label: "Policy engine", sub: "deterministic rules", x: 620, y: 80 },
+        { id: "checks", label: "Security checks", sub: "prompt injection", x: 870, y: 80, tone: "accent" },
+        { id: "audit", label: "Audit log", sub: "PostgreSQL", x: 370, y: 235, tone: "muted" },
+        { id: "approval", label: "Human approval", sub: "React dashboard", x: 620, y: 235 },
+        { id: "decision", label: "Decision", sub: "allow · block · hold", x: 870, y: 235 },
+        { id: "tool", label: "Tool runs", sub: "simulated email", x: 870, y: 390 },
+      ],
+      edges: [
+        { from: "agent", to: "gateway", label: "tool call" },
+        { from: "gateway", to: "policy" },
+        { from: "policy", to: "checks" },
+        { from: "checks", to: "decision", label: "findings" },
+        { from: "gateway", to: "audit", label: "log" },
+        { from: "decision", to: "approval", label: "hold" },
+        { from: "decision", to: "tool", label: "allow" },
+        { from: "approval", to: "tool", label: "approve" },
+      ],
+    },
+  },
+  {
+    slug: "sweepmate",
+    title: "SweepMate",
+    kind: "Offline-first mobile web app",
+    category: "product",
+    status: "In progress",
+    oneLiner: "A mobile app for overnight residence rounds: guided walkthroughs, room counts and incident notes, turned into a report ready to paste into StarRez.",
+    role: "Creator · design & full stack",
+    stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Vitest", "PWA"],
+    highlight: "Under review by McMaster as an official tool for residence Community Advisors.",
+    links: [
+      { label: "GitHub", href: "https://github.com/Erunixz/SweepMate" },
+    ],
+
+    images: [
+      {
+        src: "/projects/sweepmate/demo-poster.webp",
+        width: 1600,
+        height: 1000,
+        caption: "From the first room to the final report, all on a phone",
+        alt: "SweepMate on a phone: the home screen, a room count during a sweep, and the coverage report with per-sweep copy buttons",
+      },
+      { src: "/projects/sweepmate/setup.webp", width: 1600, height: 1000, caption: "Set up the night: shift type, who's on coverage, and the sweep schedule", alt: "SweepMate setup screens: choosing the shift, adding CAs on coverage, and setting sweep times" },
+      { src: "/projects/sweepmate/walk.webp", width: 1600, height: 1000, caption: "Walk the route one room at a time, with quick counts and observations", alt: "SweepMate walkthrough: the shift overview, a room count, and an observation being typed" },
+      { src: "/projects/sweepmate/report.webp", width: 1600, height: 1000, caption: "Log notes as they happen, then copy the whole report or a single sweep", alt: "SweepMate notes and report: a maintenance note form, the report preview, and per-sweep copy buttons" },
+    ],
+    problem:
+      "Community Advisors walk residence buildings several times a night, counting people in shared spaces and noting issues. Counts end up scribbled wherever is quickest, then retyped into StarRez's format at the end of a long shift, when details are easiest to lose.",
+    built:
+      "A phone-first app built around the real routes in Woodstock and Les Prince. It shows the next room while you walk, captures counts and notes the moment you see them, and turns the night into a consistent StarRez report you can copy in one tap, for the whole shift or a single sweep. It works offline and needs no account.",
+    how: [
+      "Two workflows share one recording model: Lead coverage for the full night, and Quick sweep for support CAs covering one building.",
+      "Route configuration is kept separate from report layout, so Les Prince can alternate wings on the walk while the report still lists every floor north-first.",
+      "Overnight scheduling handles sweeps after midnight as part of the same shift, and adding or reordering sweeps keeps their existing records.",
+      "Installable PWA that autosaves every entry on the phone and opens with no signal, since rounds pass through basements and stairwells.",
+      "Saved data is normalized at the storage boundary, so older records still load and invalid ones are caught.",
+      "68 automated tests (Vitest and React Testing Library) cover routes, schedules, storage, reports and full UI workflows, run in CI on every push.",
+    ],
+    decisions: [
+      {
+        title: "Zero, skipped and unanswered are different",
+        body: "An empty room, a room that couldn't be checked and a missed entry stay distinct, so the report shows what actually happened and never fills in guesses.",
+      },
+      {
+        title: "Built from real shift notes",
+        body: "Routes, schedules and report wording come from actual residence sweeps, so the app follows the way CAs already walk and file.",
+      },
+      {
+        title: "Offline by default",
+        body: "No server, database or account. Everything saves on the device as it's entered, which keeps it fast, private and reliable with no signal.",
+      },
+    ],
+    outcome: [
+      "Deployed on Vercel as a static, installable PWA with no backend or account required.",
+      "Currently under review by McMaster as an official tool for Community Advisors.",
+    ],
+    diagram: {
+      height: 360,
+      caption: "From the round to the report: entries save on the phone as they're made, then become a StarRez-ready report.",
+      nodes: [
+        { id: "setup", label: "Shift setup", sub: "lead or quick sweep", x: 120, y: 90, tone: "muted" },
+        { id: "route", label: "Route builder", sub: "building config", x: 370, y: 90 },
+        { id: "walk", label: "Walkthrough", sub: "count · skip · note", x: 620, y: 90, tone: "accent" },
+        { id: "store", label: "On-device save", sub: "autosave · offline", x: 870, y: 90 },
+        { id: "report", label: "Report builder", sub: "StarRez format", x: 620, y: 270 },
+        { id: "starrez", label: "StarRez", sub: "copy · share · TXT", x: 870, y: 270, tone: "muted" },
+      ],
+      edges: [
+        { from: "setup", to: "route" },
+        { from: "route", to: "walk" },
+        { from: "walk", to: "store", label: "autosave" },
+        { from: "walk", to: "report", label: "records" },
+        { from: "report", to: "starrez", label: "copy" },
       ],
     },
   },
