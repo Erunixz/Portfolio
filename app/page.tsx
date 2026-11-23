@@ -42,17 +42,19 @@ export default function Home() {
                 system they&apos;d grown up in. I was behind, and I couldn&apos;t afford to stay there.
               </p>
               <p>
-                Barely two years later, I was qualifying for the <B>Canadian Mathematical Olympiad Repêchage</B>, earning distinction in the{" "}
-                <B>Canadian Computing Competition</B>, and building clinical AI at the <B>KITE Research Institute (UHN)</B> beside senior researchers and University of Toronto
-                professors, before I&apos;d even started university.
+                Barely two years later, I was qualifying for the Canadian Mathematical Olympiad Repêchage, earning distinction in the Canadian Computing Competition, and
+                building clinical AI at the KITE Research Institute (UHN) beside senior researchers and University of Toronto professors, before I&apos;d even started
+                university. That work earned me offers with scholarships from U of T, Waterloo and McMaster, where I now study Computer Science with a 4.0 GPA and $240K in
+                scholarships.
               </p>
               <p>
-                That work was recognized with <B>$120K+ in scholarship offers from U of T</B> and Waterloo&apos;s <B>Global Scholarship</B>, given to just ten students in the
-                world. Today I study Computer Science at McMaster, where I&apos;ve earned <B>$239K in scholarships</B> and work as an <B>ML Research Assistant</B>.
+                Now I build AI where it counts. At KITE, I helped turn a few seconds of a patient&apos;s voice into a screening test for sleep apnea, a condition millions
+                live with undiagnosed. At McMaster, I&apos;m an ML Research Assistant building computer vision models that enhance low-light images. At Google
+                Developer Groups, I&apos;m building AgentGuard, a security layer that stops AI agents from being turned against the people they serve.
               </p>
               <p>
-                I don&apos;t take any of it for granted. Starting from behind taught me to learn fast, work relentlessly and stay hungry, and that&apos;s what I bring to every
-                team I join. I want to build AI that genuinely matters, alongside people who push me to be better.
+                I don&apos;t take any of it for granted. Starting from behind taught me to learn fast, work relentlessly and stay hungry. I bring that drive to every team I
+                join, building AI that genuinely matters and seeking out people who push me to be better.
               </p>
             </div>
           </div>
@@ -110,8 +112,4 @@ function SeeAll({ href }: { href: string }) {
       Open tab <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
     </Link>
   )
-}
-
-function B({ children }: { children: React.ReactNode }) {
-  return <strong className="font-semibold text-ink">{children}</strong>
 }
