@@ -71,12 +71,10 @@ export const projects: Project[] = [
     built:
       "Name a city and say what you like. A crew of code tools and two AI agents builds a day-by-day plan on real streets. You then fly through it one stop at a time over Google's photorealistic 3D tiles, and change it by hand or by typing what you want.",
     how: [
-      "A multi-stage pipeline: deterministic tools discover, rank, verify, route and time the trip; two AI agents (Scout and Critic) select and review.",
-      "Agents can't invent places: every pick must come from a verified candidate set built from OpenStreetMap, Wikipedia and Wikidata.",
-      "Preferences like budget, accessibility and diet are enforced in code, and the Critic rejects and replaces invalid stops.",
-      "Progress streams to the client over Server-Sent Events, with pins appearing as places are verified.",
-      "Cinematic stop-to-stop camera flights with isolated, deterministic, unit-tested camera math.",
-      "Cost-aware: responses cached in memory and MongoDB, field masks on routing calls, and rendering pauses in background tabs.",
+      "A multi-agent pipeline: code tools discover, rank, verify and route places, while two AI agents (Scout and Critic) select and review the plan.",
+      "Grounded AI: every pick must come from verified places built from OpenStreetMap, Wikipedia and Wikidata, so the agents can't invent locations.",
+      "Live progress streams over Server-Sent Events, with pins appearing on the 3D map as places are verified.",
+      "Cost-aware by design: responses cached in memory and MongoDB, trimmed API calls, and rendering that pauses in background tabs.",
     ],
     decisions: [
       {
@@ -84,12 +82,8 @@ export const projects: Project[] = [
         body: "Routes, distances and timing are computed deterministically. Models only choose among verified options, and every output is validated with Zod.",
       },
       {
-        title: "Degrade, don't fail",
-        body: "Routing falls back to clearly labelled estimates and place discovery can switch sources, so the pipeline keeps going when an upstream service doesn't.",
-      },
-      {
         title: "Tested like a product",
-        body: "Vitest covers the pipeline, ranking rules, camera math, editing, persistence and APIs, and CI runs type checks, builds and tests on every push.",
+        body: "Vitest covers the pipeline, ranking, camera math, persistence and APIs, and CI runs type checks, builds and tests on every push.",
       },
     ],
     outcome: [
@@ -152,28 +146,23 @@ export const projects: Project[] = [
     built:
       "A drive-through that speaks your language: multilingual voice ordering that knows the menu and reads your order back, a kiosk that updates as you talk, and a kitchen display that receives every order in real time.",
     how: [
-      "ElevenLabs Conversational AI Agent runs the voice pipeline, with Gemini handling the ordering logic.",
+      "ElevenLabs Conversational AI runs the multilingual voice pipeline, with Gemini handling the ordering logic.",
       "Strict menu grounding and structured JSON output keep orders accurate and stop the model from inventing items.",
-      "TensorFlow.js person detection starts the conversation when a customer pulls up, with a manual fallback.",
-      "React + Vite + Tailwind frontend and a Node.js / Express backend, with Socket.IO broadcasting orders to every kitchen display.",
+      "TensorFlow.js person detection starts the conversation when a customer pulls up.",
+      "React frontend and Node.js / Express backend, with Socket.IO pushing every order to the kitchen display in real time.",
     ],
     decisions: [
       {
         title: "Ground the model in the menu",
-        body: "Keeping the voice agent and the ordering logic aligned took the most iteration; strict grounding made the JSON orders consistent and menu-accurate.",
+        body: "Keeping the voice agent and ordering logic aligned took the most iteration. Strict grounding made orders consistent and menu-accurate.",
       },
       {
         title: "Zero-touch start",
         body: "Person detection starts the conversation, so a customer never has to press anything to begin ordering.",
       },
-      {
-        title: "Pivot when it's right",
-        body: "The team started in Python and Flutter and moved to Node.js and React mid-hackathon to wire vision, voice and real-time updates together.",
-      },
     ],
     outcome: [
-      "A working end-to-end workflow: detection, multilingual voice ordering, order confirmation and a live kitchen display.",
-      "Next steps the team scoped: a Raspberry Pi kiosk, payments and pilot testing at real locations.",
+      "A working end-to-end drive-through built during the hackathon: detection, multilingual voice ordering, order confirmation and a live kitchen display.",
     ],
     diagram: {
       height: 360,
@@ -221,25 +210,19 @@ export const projects: Project[] = [
     built:
       "AgentGuard sits between an agent and its tools. Each proposed tool call is checked against authorization policies, validated, and scanned for prompt injection and sensitive data, then allowed, blocked or held for human approval, with every decision audited. I'm on the AI/ML & Security team, where I own the prompt-injection detector.",
     how: [
-      "A FastAPI gateway receives each proposed tool call and runs it through a deterministic policy engine: allow, block or approval required.",
-      "My detector flags untrusted text only when it contains both a fake role marker (like \"SYSTEM:\") and an explicit override phrase, which keeps false alarms low.",
-      "Input is normalized character by character with Unicode NFKC, casefolding and whitespace collapsing, so full-width and mixed-case tricks still match, and evidence is cut from the original text.",
-      "Findings are structured (category, severity, confidence, rule IDs, bounded evidence) so the decision engine can weigh them alongside policy.",
-      "A React dashboard shows agent activity and lets a reviewer approve or deny actions that were held.",
-      "An open benchmark of adversarial and benign scenarios runs alongside 150+ backend tests in GitHub Actions.",
+      "A FastAPI gateway intercepts every tool call an agent makes and runs it through a policy engine: allow, block or send for human approval.",
+      "My prompt-injection detector catches hidden instructions in untrusted content, like emails, and is hardened against disguised characters and formatting tricks.",
+      "A React dashboard lets reviewers see agent activity and approve or deny held actions.",
+      "An open security benchmark and 150+ backend tests run in CI on every change.",
     ],
     decisions: [
       {
         title: "Detectors inform, policy decides",
-        body: "The detector never blocks or grants anything on its own. It returns findings to the decision engine, so a heuristic can never override a policy block.",
+        body: "Security checks feed findings to the decision engine instead of acting alone, so no single heuristic can override a policy.",
       },
       {
-        title: "Narrow on purpose",
-        body: "The rules stay strict to avoid false positives, and known misses (paraphrases, encoded text, other languages) are written up as regression cases instead of being hidden.",
-      },
-      {
-        title: "Simulated tools first",
-        body: "The demo tool is a simulated email send with a local outbox, so the full allow, block and approve flow can be shown without real credentials.",
+        title: "Human in the loop",
+        body: "High-risk actions pause for a person to approve, so agents stay useful without being given unchecked power.",
       },
     ],
     outcome: [
@@ -302,25 +285,19 @@ export const projects: Project[] = [
     built:
       "A phone-first app built around real residence routes. It shows the next room while you walk, captures counts and notes the moment you see them, and turns the night into a consistent, ready-to-file report you can copy in one tap, for the whole shift or a single sweep. It works offline and needs no account.",
     how: [
-      "Two workflows share one recording model: Lead coverage for the full night, and Quick sweep for support CAs covering one building.",
-      "Route configuration is kept separate from report layout, so a building can alternate wings on the walk while the report keeps a fixed floor order.",
-      "Overnight scheduling handles sweeps after midnight as part of the same shift, and adding or reordering sweeps keeps their existing records.",
-      "Installable PWA that autosaves every entry on the phone and opens with no signal, since rounds pass through basements and stairwells.",
-      "Saved data is normalized at the storage boundary, so older records still load and invalid ones are caught.",
-      "68 automated tests (Vitest and React Testing Library) cover routes, schedules, storage, reports and full UI workflows, run in CI on every push.",
+      "Offline-first PWA that installs to the home screen, autosaves every entry on the device and works with no signal.",
+      "A configurable route engine generates each building's walkthrough and keeps reports consistent when the schedule changes mid-shift.",
+      "Two workflows share one data model: full-night coverage for the lead and quick single-building sweeps for support staff.",
+      "68 automated tests (Vitest and React Testing Library) run in CI on every push.",
     ],
     decisions: [
       {
-        title: "Zero, skipped and unanswered are different",
-        body: "An empty room, a room that couldn't be checked and a missed entry stay distinct, so the report shows what actually happened and never fills in guesses.",
+        title: "Built for a problem I had",
+        body: "I designed it around my own overnight shifts as a Community Advisor, replacing scattered notes and end-of-night retyping with one guided workflow.",
       },
       {
-        title: "Built from real shift notes",
-        body: "Routes, schedules and report wording come from actual residence sweeps, so the app follows the way CAs already walk and file.",
-      },
-      {
-        title: "Offline by default",
-        body: "No server, database or account. Everything saves on the device as it's entered, which keeps it fast, private and reliable with no signal.",
+        title: "Private by design",
+        body: "No server, database or account. Everything stays on the device, which keeps it fast, private and reliable.",
       },
     ],
     outcome: [
