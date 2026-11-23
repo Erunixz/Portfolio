@@ -5,7 +5,6 @@ import "./globals.css"
 import { site } from "@/content/site"
 import Providers from "@/components/Providers"
 import SiteHeader from "@/components/SiteHeader"
-import SiteFooter from "@/components/SiteFooter"
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800", "900"], variable: "--font-poppins" })
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" })
@@ -54,7 +53,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main id="main" className="pt-32 lg:pt-28">
             {children}
           </main>
-          <SiteFooter />
         </Providers>
         <Analytics />
       </body>

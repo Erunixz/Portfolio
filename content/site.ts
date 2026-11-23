@@ -1,7 +1,6 @@
 export const site = {
   name: "Erfan",
   firstName: "Erfan",
-  fullName: "Erfan Zamani",
   headline: "ML research & software engineering",
   description:
     "Erfan Zamani, Computer Science student at McMaster. ML Research Assistant working across machine learning and software engineering, and former software engineer on an AI sleep apnea screening platform at KITE Research Institute (UHN).",
