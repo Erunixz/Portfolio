@@ -9,7 +9,7 @@ import { ArrowRight } from "../Icons"
 const badges = [
   { text: "ML research @ McMaster", icon: "M4 7h16M4 12h10M4 17h7" },
   { text: "OSA screening software @ UHN", icon: "M3 12h4l2-5 4 10 2-5h6" },
-  { text: "Open source @ GDG", icon: "m8 8-4 4 4 4m8 0 4-4-4-4m-2-3-4 14" },
+  { text: "AI security @ GDG", icon: "M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z" },
 ]
 
 function useTypewriter(words: readonly string[]) {
@@ -46,14 +46,14 @@ export default function Hero() {
     <section id="home" className="shell grid items-center gap-12 pt-6 pb-16 md:grid-cols-2 md:pt-10 md:pb-20 lg:gap-16">
       <div className="reveal-left">
         <h1>
-          <span className="block font-hand text-2xl text-maroon md:text-3xl">Hi, I&apos;m</span>
-          <span className="relative mt-1 inline-block text-4xl leading-[1.05] font-extrabold tracking-[-0.035em] md:text-5xl">
-            {site.name}
+          <span className="relative inline-block text-4xl leading-[1.05] font-extrabold tracking-[-0.035em] md:text-5xl">
+            Hello, World!
 
             <svg viewBox="0 0 300 14" preserveAspectRatio="none" className="draw absolute -bottom-3 left-0 h-3 w-full text-maroon" aria-hidden>
               <path d="M2 9 C 60 3, 120 3, 180 7 S 260 11, 298 5" pathLength={1} className="stroke-draw" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" style={{ transitionDelay: "400ms" }} />
             </svg>
           </span>
+          <span className="mt-5 block font-hand text-3xl text-maroon md:text-4xl">I&apos;m {site.name}</span>
         </h1>
         <p className="mt-5 h-8 text-xl font-semibold tracking-tight text-ink-2 md:text-2xl" aria-label={site.roles.join(", ")}>
           <span aria-hidden>
