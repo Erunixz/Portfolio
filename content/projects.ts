@@ -324,8 +324,8 @@ export const projects: Project[] = [
       },
     ],
     outcome: [
-      "Deployed on Vercel as a static, installable PWA with no backend or account required.",
-      "Currently under review by McMaster as an official tool for Community Advisors.",
+      "Live and in use on overnight shifts. The public link is withheld for privacy.",
+      "In the process of becoming an official McMaster tool for residence Community Advisors.",
     ],
     diagram: {
       height: 360,
